@@ -1,0 +1,28 @@
+name: Format code
+
+on:
+  push:
+    branches:
+      - main  # укажите вашу основную ветку
+
+jobs:
+  format:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Установка Black
+      run: pip install black
+
+    - name: Форматирование кода
+      run: black .
+
+    - name: Коммит и пуш изменений
+      uses: EndBug/add-and-commit@v9
+      with:
+        author_name: ${{ github.actor }}
+        author_email: ${{ github.actor }}@users.noreply.github.com
+        message: "Format code with black"
+        add: "."
+        branch: ${{ github.ref_name }}
